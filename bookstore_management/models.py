@@ -1,16 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.contrib.auth import get_user_model
+from django.db.models.signals import post_save
 
-
-class TheUser(models.Model):
-    UserID = models.IntegerField(primary_key=True)
-    Name = models.CharField(max_length=255)
-    Password = models.CharField(max_length=255)
+class TheUser(AbstractUser):
     Role = models.CharField(max_length=255)
-    Email = models.EmailField()
-
-    def __str__(self):
-        return self.Name
-
+    id = models.CharField(max_length=20,primary_key=True)
+   
 
 class College(models.Model):
     CollegeID = models.CharField(max_length=20, primary_key=True)
@@ -38,6 +34,7 @@ class Course(models.Model):
     DepartmentCode = models.ForeignKey(Department, on_delete=models.CASCADE)
     # Linking Course with Book
     books = models.ManyToManyField('Book', through='CourseBook')
+    isArchive = models.BooleanField(default=False)
 
     def __str__(self):
         return self.CourseName
@@ -66,6 +63,19 @@ class CourseBook(models.Model):
     Course = models.ForeignKey(Course, on_delete=models.CASCADE)
     Book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
+class CourseDepartment(models.Model):
+    CourseID = models.CharField(max_length=8, primary_key=True)
+    DepartmentCode = models.CharField(max_length=4, primary_key=True)
+
+    # Define foreign keys to Course and Department
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+
+    class Meta:
+        # Define a composite primary key
+        constraints = [
+            models.UniqueConstraint(fields=['CourseID', 'DepartmentCode'], name='PK_CourseDepartment')
+        ]
 
 class RequestedBookList(models.Model):
     RequestedBookListID = models.IntegerField(primary_key=True)
@@ -78,13 +88,14 @@ class RequestedBookList(models.Model):
     LSTATUS_CHOICES = (
     ('approved', 'Approved'),
     ('rejected', 'Rejected'),
+    ('pending', 'Pending'),
     )
-    LStatus = models.CharField(max_length=255, choices=LSTATUS_CHOICES, default='approved')  # Set default to 'approved'
-    # comment = models.TextField(optional=True)
+    LStatus = models.CharField(max_length=255, choices=LSTATUS_CHOICES, default='pending')  # Set default to 'approved'
+    comment = models.TextField(blank=True)
+    
     def __str__(self):
         return f"{self.LName} requested by {self.DepartmentCode}"
-
-    
+     
 class RequestedBook(models.Model):
     RequestedBookID = models.IntegerField(primary_key=True)
     BookID = models.ForeignKey(Book, on_delete=models.CASCADE)
