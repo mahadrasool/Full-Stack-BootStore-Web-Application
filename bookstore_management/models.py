@@ -75,9 +75,16 @@ class RequestedBookList(models.Model):
     DepartmentCode = models.CharField(max_length=4)
     SchoolYear = models.CharField(max_length=10)
     CreationDate = models.DateField()
-    LStatus = models.CharField(max_length=255)
+    LSTATUS_CHOICES = (
+    ('approved', 'Approved'),
+    ('rejected', 'Rejected'),
+    )
+    LStatus = models.CharField(max_length=255, choices=LSTATUS_CHOICES, default='approved')  # Set default to 'approved'
+    # comment = models.TextField(optional=True)
+    def __str__(self):
+        return f"{self.LName} requested by {self.DepartmentCode}"
 
-
+    
 class RequestedBook(models.Model):
     RequestedBookID = models.IntegerField(primary_key=True)
     BookID = models.ForeignKey(Book, on_delete=models.CASCADE)
