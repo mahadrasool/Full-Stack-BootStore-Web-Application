@@ -34,10 +34,10 @@ Once you have installed the dependencies, you can run the Django development ser
    python manage.py runserver
    ```
 
-2. Open a web browser and go to the following URL:
+2. Open a web browser and go to the following URL and choose your departmental or other site:
 
    ```
-   http://127.0.0.1:8000/admin/
+   http://127.0.0.1:8000/
    ```
 
 3. Log in using the following credentials:
