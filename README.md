@@ -42,7 +42,7 @@ Once you have installed the dependencies, you can run the Django development ser
 
 3. Log in using the following credentials:
 
-   - Username: user
+   - Username: admin
    - Password: admin
 
 ## Accessing Your Dashboard

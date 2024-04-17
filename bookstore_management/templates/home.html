@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" >
+</head>
+<body>
+    <header>
+        <h1>Welcome to Our Bookstore</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="bookstore/" target="_blank" >Admin Login</a></li>
+                <li><a href="department/" target="_blank" >Department Login</a></li>
+                <li><a href="college/" target="_blank" >College Chair Login</a></li>
+                <li><a href="inventory_report/">View Inventory Report</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="featured-books">
+            <!-- Display featured books here -->
+        </section>
+        <section class="new-releases">
+            <!-- Display new book releases here -->
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Bookstore. All rights reserved.</p>
+    </footer>
+</body>
+</html>

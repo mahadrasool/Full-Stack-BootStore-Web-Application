@@ -1,58 +1,44 @@
-from bookstore_management.models import Course, Department
+from bookstore_management.models import Inventory, Book
 
-# Define the data
 data = [
-    ('ACCT2311', 'Fundamentals of Financial Accounting', 'ACCT'),
-    ('MISY2311', 'Introduction to Management Information Systems', 'MISY'),
-    ('BUSI2311', 'Principles of Management', 'BUSI'),
-    ('MISY2312', 'Introduction to Programming for MIS', 'MISY'),
-    ('MISY2313', 'Intermediate Programming for MIS', 'MISY'),
-    ('MISY3312', 'Introduction to Telecommunications', 'MISY'),
-    ('BUSI3311', 'Legal Environment of Business', 'BUSI'),
-    ('BUSI3312', 'Organizational Behavior', 'BUSI'),
-    ('BUSI3313', 'Marketing Principles', 'BUSI'),
-    ('BUSI3321', 'Operation Management', 'BUSI'),
-    ('MISY3311', 'Database Management', 'MISY'),
-    ('MISY3322', 'Systems Analysis and Design', 'MISY'),
-    ('ACCT2321', 'Managerial Accounting', 'ACCT'),
-    ('MISY4331', 'Building Electronic Commerce', 'MISY'),
-    ('MISY4333', 'Introduction to Information Assurance', 'MISY'),
-    ('MISY3331', 'Advanced Database Concepts', 'MISY'),
-    ('MISY4341', 'Object Oriented Analysis and Design', 'MISY'),
-    ('FINA3311', 'Financial Management Principles', 'FINA'),
-    ('BUSI4361', 'Entrepreneurship', 'BUSI'),
-    ('BUSI4362', 'Strategic Management', 'BUSI'),
-    ('SOEN2312', 'Web Programming', 'SOEN'),
-    ('SOEN2332', 'Discrete Structure and Combinatorial Analysis', 'SOEN'),
-    ('SOEN3351', 'Algorithms', 'SOEN'),
-    ('SOEN3311', 'Requirements Engineering', 'SOEN'),
-    ('SOEN4361', 'Operating System', 'SOEN'),
-    ('SOEN4371', 'E-Commerce', 'SOEN'),
-    ('SOEN4311', 'Software Architecture and Design', 'SOEN'),
-    ('SOEN4313', 'Software Project Management', 'SOEN'),
-    ('ITAP2431', 'Network Management', 'ITAP'),
-    ('ITAP2312', 'Web Programming', 'ITAP'),
-    ('ITAP3431', 'Network Security', 'ITAP'),
-    ('ITAP3313', 'User Interface Development', 'ITAP'),
-    ('ITAP3471', 'Web Server Administration', 'ITAP'),
-    ('ITAP3383', 'Enterprise Resource Planning Systems', 'ITAP'),
-    ('ITAP3382', 'Business Intelligence', 'ITAP')
+    (1, '9780077125363', 'MISY', 'MISY4341', '22'),
+    (2, '9781292103471', 'MISY', 'MISY2312', '42'),
+    (3, '9780324601190', 'SOEN', 'SOEN4371', '50'),
+    (4, '978-0133023893', 'ITAP', 'ITAP3382', '12'), 
+    (5, '9780357418697', 'MISY', 'MISY2311', '70'),
+    (6, '9781292061184', 'MISY', 'MISY3311', '36'), 
+    (7, '9780071107662', 'MISY', 'MISY3322', '10'),
+    (8, '9781285860237', 'MISY', 'MISY4341', '7'),
+    (9, '9780134794105', 'ITAP', 'ITAP3431', '10'),
+    (10, '9780134794105', 'ITAP', 'ITAP3431', '90'),
+    (11, '9780321992789', 'ITAP', 'ITAP3313', '7'),
+    (12, '9780135192016', 'SOEN', 'SOEN4311', '2'),
+    (13, '9780134518379', 'ITAP', 'ITAP2431', '21'),
+    (14, '9780134729397', 'ACCT', 'ACCT2311', '26'),
+    (15, '9780135192022', 'BUSI', 'BUSI2311', '15'),
+    (16, '9780135192090', 'BUSI', 'BUSI3311', '18'),
+    (17, '9780135191100', 'BUSI', 'BUSI3312', '32'),
+    (18, '9780135192091', 'BUSI', 'BUSI3313', '11'),
+    (19, '9780135192010', 'BUSI', 'BUSI3321', '13'),
+    (20, '9780135192123', 'ACCT', 'ACCT2321', '80'),
+    (21, '9780135192116', 'FINA', 'FINA3311', '77'),
+    (22, '9780135192009', 'BUSI', 'BUSI4362', '45'),
 ]
 
-# Insert data into the Course model
+# Insert data into the Inventory model
 for item in data:
+    print(item)
     try:
-        department_code = item[2]  # Fetch DepartmentCode from data
-        department = Department.objects.get(DepartmentCode=department_code)  # Get the Department object
-        course = Course.objects.create(
-            CourseID=item[0],
-            CourseName=item[1],
-            DepartmentCode=department  # Assign the Department object to DepartmentCode
+        book = Book.objects.get(BookID=item[1])
+        inventory = Inventory.objects.create(
+            InventoryID=item[0],
+            BookID=book,
+            DepartmentCode=item[2],
+            CourseID=item[3],
+            CurrentInventory=item[4]
         )
-        print(f"Course created: {course}")
-    except Department.DoesNotExist:
-        print(f"Department with DepartmentCode {department_code} does not exist.")
+        print(f"Inventory created: {inventory}")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(e)
 
 print("Data insertion complete.")

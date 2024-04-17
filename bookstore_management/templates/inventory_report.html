@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Report</title>
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button[type="submit"] {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #report-container {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="report-form" method="get" action="{% url 'generate_report' %}">
+        <label for="department">Select Department:</label>
+        <select id="department" name="department_code">
+            {% for department in departments %}
+            <option value="{{ department.DepartmentCode }}">{{ department.DepartmentName }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Generate Report (Full Page)</button>
+    </form>
+
+    <div id="report-container">
+    </div>
+
+    <script>
+        document.getElementById('report-form').addEventListener('submit', handleFormSubmit);
+
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent full page reload
+
+            const departmentCode = document.getElementById('department').value;
+
+            // Make an AJAX request to the same URL (generate_report)
+            fetch(`{% url 'generate_report' %}?department_code=${departmentCode}`)
+                .then(response => response.json())
+                .then(data => {  // data will contain filtered inventories
+                    // console.log("Data")
+                    // Update the report container with the filtered data using DOM manipulation
+                    updateReport(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    // Handle errors appropriately (e.g., display an error message)
+                });
+        }
+
+        function updateReport(data) {
+            console.log(data)
+            const reportContainer = document.getElementById('report-container');
+
+            if (data) {
+                reportContainer.innerHTML = data.data; // Clear existing content
+                // Display report title
+                const reportTitle = document.createElement('h2');
+                //   reportTitle.innerText = `Inventory Report for ${departmentCode}`;
+                reportContainer.insertBefore(reportTitle, reportContainer.firstChild);
+            } else {
+                // Handle no data scenario (e.g., display a message)
+                const message = document.createElement('p');
+                message.innerText = 'No inventory found for this department.';
+                reportContainer.appendChild(message);
+            }
+        }
+    </script>
+
+</body>
+
+</html>

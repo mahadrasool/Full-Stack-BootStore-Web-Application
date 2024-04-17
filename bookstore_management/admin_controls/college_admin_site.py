@@ -1,6 +1,6 @@
 from django.contrib import admin
 # Register your models here.
-from ..models import TheUser, College, Department, Course, Publisher, Book, RequestedBookList, RequestedBook, Inventory, CourseBook
+from ..models import TheUser, College, Department, Course, Publisher, Book, RequestedBookList, RequestedBook, Inventory, CourseBook, CourseDepartment
 from admin_extra_buttons.api import ExtraButtonsMixin, button, confirm_action, link, view
 from django.contrib.admin import AdminSite
 
@@ -68,6 +68,9 @@ class CourseBookAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
         return queryset.filter(Course__isArchive=False)
 
+class CourseDepartmentAdmin(admin.ModelAdmin):
+    list_display = ("CourseID","DepartmentCode",)
+    pass
 
 # College dean admin site models and related settings
 college_admin_site = CollegeDean(name='college_admin')
@@ -79,4 +82,4 @@ college_admin_site.register(Book, BookAdmin)
 college_admin_site.register(RequestedBookList, RequestedBookListAdmin)
 college_admin_site.register(Inventory, InventoryAdmin)
 college_admin_site.register(CourseBook, CourseBookAdmin)
-
+college_admin_site.register(CourseDepartment,CourseDepartmentAdmin)

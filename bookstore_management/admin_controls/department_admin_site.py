@@ -1,6 +1,6 @@
 from django.contrib import admin
 # Register your models here.
-from ..models import TheUser, College, Department, Course, Publisher, Book, RequestedBookList, RequestedBook, Inventory, CourseBook
+from ..models import TheUser, College, Department, Course, Publisher, Book, RequestedBookList, RequestedBook, Inventory, CourseBook, CourseDepartment
 from admin_extra_buttons.api import ExtraButtonsMixin, button, confirm_action, link, view
 from django.contrib.admin import AdminSite
 
@@ -52,6 +52,8 @@ class CourseBookAdmin(admin.ModelAdmin):
         queryset = super().get_queryset(request)
         return queryset.filter(Course__isArchive=False)
 
+class CourseDepartmentAdmin(admin.ModelAdmin):
+    pass
 
 # Departmental chair admin site models and related settings
 departmental_admin_site = DepartmentalChair(name='department_admin')
@@ -64,5 +66,5 @@ departmental_admin_site.register(RequestedBookList, RequestedBookListAdmin)
 departmental_admin_site.register(RequestedBook, RequestedBookAdmin)
 departmental_admin_site.register(Inventory, InventoryAdmin)
 departmental_admin_site.register(CourseBook, CourseBookAdmin)
-
+departmental_admin_site.register(CourseDepartment,CourseDepartmentAdmin)
 

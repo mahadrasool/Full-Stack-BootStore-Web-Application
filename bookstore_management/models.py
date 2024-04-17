@@ -2,12 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
+from django.core.exceptions import ObjectDoesNotExist
 
 class TheUser(AbstractUser):
     Role = models.CharField(max_length=255)
-    id = models.CharField(max_length=20,primary_key=True)
-   
-
+    
 class College(models.Model):
     CollegeID = models.CharField(max_length=20, primary_key=True)
     CollegeName = models.CharField(max_length=255)
@@ -64,18 +63,12 @@ class CourseBook(models.Model):
     Book = models.ForeignKey(Book, on_delete=models.CASCADE)
 
 class CourseDepartment(models.Model):
-    CourseID = models.CharField(max_length=8, primary_key=True)
-    DepartmentCode = models.CharField(max_length=4, primary_key=True)
+    CourseID = models.ForeignKey(Course, on_delete=models.CASCADE)
+    DepartmentCode = models.ForeignKey(Department, on_delete=models.CASCADE)
 
-    # Define foreign keys to Course and Department
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE)
-
-    class Meta:
-        # Define a composite primary key
-        constraints = [
-            models.UniqueConstraint(fields=['CourseID', 'DepartmentCode'], name='PK_CourseDepartment')
-        ]
+    def __str__(self):
+        return f"Course: {self.CourseID} | Department: {self.DepartmentCode}"
+            
 
 class RequestedBookList(models.Model):
     RequestedBookListID = models.IntegerField(primary_key=True)
@@ -110,7 +103,9 @@ class RequestedBook(models.Model):
     NumberedOrderForSpring = models.IntegerField()
     NumberedOrderForSummer = models.IntegerField()
     Approved = models.BooleanField()
-
+    
+    def __str__(self):
+        return f"{self.RequestedBookID}: {self.BookID}"
 
 class Inventory(models.Model):
     InventoryID = models.IntegerField(primary_key=True)
