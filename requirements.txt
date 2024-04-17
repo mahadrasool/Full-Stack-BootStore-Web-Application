@@ -1,1 +1,7 @@
-django
+asgiref==3.8.1
+autopep8==2.1.0
+Django==5.0.4
+django-admin-extra-buttons==1.5.7
+pycodestyle==2.11.1
+sqlparse==0.4.4
+tzdata==2024.1
