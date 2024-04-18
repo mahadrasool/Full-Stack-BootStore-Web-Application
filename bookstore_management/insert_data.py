@@ -41,4 +41,3 @@ for item in data:
     except Exception as e:
         print(e)
 
-print("Data insertion complete.")

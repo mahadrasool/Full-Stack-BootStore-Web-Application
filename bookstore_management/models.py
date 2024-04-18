@@ -6,6 +6,10 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class TheUser(AbstractUser):
     Role = models.CharField(max_length=255)
+    id = models.IntegerField(primary_key=True)
+    
+    def __str__(self) -> str:
+        return f"{self.id} , {self.username}"
     
 class College(models.Model):
     CollegeID = models.CharField(max_length=20, primary_key=True)

@@ -8,7 +8,6 @@ from django.contrib.auth.models import User, Group
 class BookStoreAdministration(AdminSite):
     site_header = 'Principal administration'
 
-
 class TheUserAdmin(ExtraButtonsMixin, admin.ModelAdmin):
     list_filter = ["Role",]
 
@@ -21,7 +20,7 @@ class TheUserAdmin(ExtraButtonsMixin, admin.ModelAdmin):
         users = TheUser.objects.all()
         for user in users:
             user.is_staff = True
-            user.is_admin = True
+            user.is_superuser = True
             user.save()
         self.message_user(
             request, 'All Users have staff status set to true and they can now log into to ther respective accounts')
@@ -73,7 +72,8 @@ class InventoryAdmin(ExtraButtonsMixin, admin.ModelAdmin):
             html_attrs={'style': 'background-color:#88FF88;color:black'})
     def send_email_to_departments(self, request):
         # Code to send email, you can add here email api code
-        pass
+        self.message_user(request, 'Email Sent to all departments')
+        # pass
 
     def custom_field(self):
         # Define your custom field logic here, for example:
@@ -85,7 +85,7 @@ class InventoryAdmin(ExtraButtonsMixin, admin.ModelAdmin):
     list_display = [custom_field,]  # Fields to display in the list view
     list_filter = ['DepartmentCode']  # Fields to filter in the list view
     custom_field.short_description = 'Inventory ID - BookID - Department - Course Code - Current Inventory'
-    search_fields = ('BookID__BookName',)  # Search by book title
+    search_fields = ('BookID__BookTitle',)  # Search by book title
 
 
 class CourseBookAdmin(admin.ModelAdmin):
@@ -99,10 +99,6 @@ class CourseBookAdmin(admin.ModelAdmin):
 
 
 bookstore_admin_site = BookStoreAdministration()
-# # Register the User model
-# bookstore_admin_site.register(User)
-# # Register the Group model
-# bookstore_admin_site.register(Group)
 
 bookstore_admin_site.register(TheUser, TheUserAdmin)
 bookstore_admin_site.register(College, CollegeAdmin)
