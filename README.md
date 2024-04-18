@@ -18,15 +18,15 @@ Before running the project, make sure you have Python and pip installed on your 
    cd bookstore
    ```
 
-3. Install the required dependencies using pip:
+3. Activate virtual environment using:
 
    ```
-   pip install -r requirements.txt
+   source myenv/Scripts/activate
    ```
 
 ## Usage
 
-Once you have installed the dependencies, you can run the Django development server and access the admin site:
+Once you have activated the virtual environment that already has packages installed, you can run the Django development server and access the admin site:
 
 1. Start the Django development server:
 
