@@ -6,7 +6,7 @@ from django.contrib.admin import AdminSite
 from django.contrib.auth.models import User, Group
 
 class BookStoreAdministration(AdminSite):
-    site_header = 'Principal administration'
+    site_header = 'Bookstore administration'
 
 class TheUserAdmin(ExtraButtonsMixin, admin.ModelAdmin):
     list_filter = ["Role",]

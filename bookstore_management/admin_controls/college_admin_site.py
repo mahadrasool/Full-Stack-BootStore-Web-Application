@@ -5,7 +5,7 @@ from admin_extra_buttons.api import ExtraButtonsMixin, button, confirm_action, l
 from django.contrib.admin import AdminSite
 
 class CollegeDean(AdminSite):
-    site_header = 'College Dean'
+    site_header = 'College Chair'
 
 class CollegeAdmin(admin.ModelAdmin):
     # list_display = ('name', 'location')  # Fields to display in the list view
@@ -80,6 +80,7 @@ college_admin_site.register(Course, CourseAdmin)
 college_admin_site.register(Publisher, PublisherAdmin)
 college_admin_site.register(Book, BookAdmin)
 college_admin_site.register(RequestedBookList, RequestedBookListAdmin)
+college_admin_site.register(RequestedBook, RequestedBookAdmin)
 college_admin_site.register(Inventory, InventoryAdmin)
 college_admin_site.register(CourseBook, CourseBookAdmin)
 college_admin_site.register(CourseDepartment,CourseDepartmentAdmin)
