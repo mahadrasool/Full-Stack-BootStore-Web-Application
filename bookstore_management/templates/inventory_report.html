@@ -33,8 +33,17 @@
             color: #fff;
             cursor: pointer;
         }
-
-        button[type="submit"]:hover {
+        button[type="click"] {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button[type="submit"]:hover,
+        button[type="click"]:hover {
             background-color: #0056b3;
         }
 
@@ -78,10 +87,31 @@
     </form>
 
     <div id="report-container">
+
+    </div>
+    <div>
+        <button type="click" id="send-report">Send Report</button>
     </div>
 
     <script>
         document.getElementById('report-form').addEventListener('submit', handleFormSubmit);
+        document.getElementById('send-report').addEventListener('click', handleSendReport);
+
+        function handleSendReport (){
+            event.preventDefault(); // Prevent full page reload
+            const departmentCode = document.getElementById('department').value;
+            const reportConatiner = document.getElementById('report-container')
+            const hasTdTag = reportConatiner.querySelector('td') !== null;
+            if (hasTdTag){
+                /**
+                 * You can custom email api logic here
+                 **/ 
+                alert("Report successfully sent using email")
+            }
+            else{
+                alert("No data found")
+            }
+        }
 
         function handleFormSubmit(event) {
             event.preventDefault(); // Prevent full page reload
