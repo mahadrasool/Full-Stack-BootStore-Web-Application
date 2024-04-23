@@ -33,24 +33,8 @@ class BookAdmin(admin.ModelAdmin):
 
 class RequestedBookListAdmin(ExtraButtonsMixin, admin.ModelAdmin):
     list_filter = ("SchoolYear","DepartmentCode",)
-    # Function to handle custom button click (replace with your logic)
-    @button(change_form=True,
-            html_attrs={'style': 'background-color:#88FF88;color:black'})
-    def approve_all_books(self, request):
-        # Get all book listing requests
-        RequestedBookList.objects.filter().update(LStatus='approved')
-        self.message_user(request, 'All Book Listing requests have been approved')
-        # Optional: returns HttpResponse
-        # return HttpResponseRedirectToReferrer(request)
-    @button(change_form=True,
-            html_attrs={'style': 'background-color:#DC6C6C;color:black'})
-    def reject_all_books(self, request):
-        # Get all book listing requests
-        RequestedBookList.objects.filter().update(LStatus='rejected')
-        self.message_user(request, 'All Book Listing requests have been rejected')
-        # Optional: returns HttpResponse
-        # return HttpResponseRedirectToReferrer(request)
-    
+    readonly_fields=['comment','LStatus', 'CreationDate', 'SchoolYear', 'DepartmentCode', 'CreatedByUserID','LName','RequestedBookListID']   
+
 class RequestedBookAdmin(admin.ModelAdmin):
     list_filter = ("DepartmentCode",)
 
