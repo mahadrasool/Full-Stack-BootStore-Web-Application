@@ -9,7 +9,7 @@ Before running the project, make sure you have Python and pip installed on your 
 1. Clone the repository to your local machine or unzip the repo if you have zip file:
 
    ```
-   git clone <repository-url>
+   git clone https://github.com/mahadrasool/Full-Stack-BootStore-Web-Application.git
    ```
 
 2. Navigate to the project directory:
